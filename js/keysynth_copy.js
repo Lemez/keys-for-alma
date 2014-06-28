@@ -41,19 +41,22 @@ $(document).ready(function () {
 						var details = [currentLetter.text(), screen.width, coordinates.left, screen.height, coordinates.top];
 						console.log(details);
 
-						if ((coordinates.left + 400) > screen.width) {
-							currentLetter.animate({
-								left: 0
-							}, 5000);
-							// alert("right bump!");
-						};
+						// if ((coordinates.left+100) > screen.width) {
+						// 	// currentLetter.stop();
+						// 	currentLetter.offset({
+						// 		left: (coordinates.left - screen.width),
+						// 		top: coordinates.top
+						// 	});
+						// 	// alert("right bump!");
+						// };
 
-						if ((coordinates.top + 400) > screen.height) {
-							currentLetter.animate({
-								top: 0
-							}, 5000);
-							// alert("bottom bump!");
-						};
+						// if ((coordinates.top+200) > screen.height) {
+						// 	currentLetter.stop();
+						// 	currentLetter.offset({
+						// 		top: (coordinates.top - screen.height)
+						// 	});
+						// 	// alert("bottom bump!");
+						// };
 
 					};
 
