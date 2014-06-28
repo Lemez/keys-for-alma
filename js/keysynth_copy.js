@@ -24,6 +24,42 @@ $(document).ready(function () {
 				return gapsString.join('');
 			};
 
+			function getPosition(e) {
+				var coordinates = e.offset();
+				// console.log(coordinates);	
+				return coordinates;
+			};
+
+			function checkPosition() {
+
+					var allLetters = $('#name1, #name2').find('span');
+					for (var i = 0; i < allLetters.length; i++) { // check coordinates
+
+						var currentLetter = allLetters.eq(i);
+
+						var coordinates = getPosition(currentLetter);
+						var details = [currentLetter.text(), screen.width, coordinates.left, screen.height, coordinates.top];
+						console.log(details);
+
+						if ((coordinates.left + 400) > screen.width) {
+							currentLetter.animate({
+								left: 0
+							}, 5000);
+							// alert("right bump!");
+						};
+
+						if ((coordinates.top + 400) > screen.height) {
+							currentLetter.animate({
+								top: 0
+							}, 5000);
+							// alert("bottom bump!");
+						};
+
+					};
+
+					setTimeout(checkPosition, 1000);
+				};
+
 
 		$(document).mousemove(function (e) {
 		
@@ -112,7 +148,7 @@ $(document).ready(function () {
 										 .css("font-size", 20 + (Math.floor(maths * 256)) )
 										 .css("text-shadow", (5 + (Math.floor(maths * 10))) + "px " + (5 + (Math.floor(maths * 10))) + "px " + "darkgray" )
 										 .animate({ 
-										 	paddingLeft: (Math.floor(maths * screen.width * 1.25)) + 'px',
+										 	paddingLeft: (Math.floor(maths * screen.width * 1.25)) + 'px'
 										 	// paddingTop: (Math.floor(maths * screen.height * 0.8)) + 'px'
 
 										 }, 1000);
@@ -153,14 +189,16 @@ $(document).ready(function () {
 
 						if ((i+1)%2==0) {
 							
-							currentLetter.animate({ fontSize: '500px', top: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 100000)));
+							currentLetter.animate({ fontSize: '500px', top: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 60000)));
+							
 
 						} else {
-							currentLetter.animate({ fontSize: '500px', left: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 100000)));
+							currentLetter.animate({ fontSize: '500px', left: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 60000)));
 						};
-
-						// console.log(allLetters.eq(i).text());
+						
 					};
+
+
 					
 					$("#and p").animate({ fontSize: '500px', top: (Math.floor(Math.random() * 800)) + 'px'}, (Math.floor(Math.random() * 100000)));
 					// $("#congrats img").animate({ width: '500px', paddingTop: (Math.floor(Math.random() * 800)) + 'px'}, (Math.floor(Math.random() * 100000)));
@@ -168,6 +206,7 @@ $(document).ready(function () {
 
 					document.getElementById("success").play();
 
+					checkPosition();
 
 				}
 
