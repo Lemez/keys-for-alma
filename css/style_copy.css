@@ -91,9 +91,9 @@ div#inputs  {
 }
 
 #and p {
-	display: none;
 	color: black;
 	padding: inherit;
+	opacity: 0;
 }
 
 .letters {

@@ -119,10 +119,10 @@ $(document).ready(function () {
 				var myDiv = '#name1'; // call the function for name1
 				letters_function(name1LettersArray);
 
-				if (name1LettersArray.length == 0) {  // call the function for name2
+				if (name1LettersArray.length == 0 && name2LettersArray.length != 0) {  // call the function for name2
 
-					$('#and p').css("display", "block");
-					$('#name2').show();
+					$('#and p').animate({ opacity: 1}, 3000 );
+					$('#name2').slideDown(2000);
 					$('#congrats').css("display", "block")
 									.animate({ top: 0}, 1000 );
 
@@ -145,7 +145,7 @@ $(document).ready(function () {
 					for (var i = 0; i < allLetters.length; i++) { // make em dance
 					
 						var maths = Math.random();
-						
+
 						if ((i+1)%2==0) {
 							allLetters.eq(i).animate({ fontSize: '500px', paddingLeft: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 100000)));
 						} else {
