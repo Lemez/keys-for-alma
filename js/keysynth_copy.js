@@ -11,6 +11,19 @@ $(document).ready(function () {
 			    // console.log(hue);
 			};
 
+			function makeGaps(stringLength) {
+
+				var gapsString = [];
+				var spanString = "<span id='gap'>*</span>";
+
+				for (var i = 0; i < stringLength; i++) {
+
+					gapsString.push(spanString);
+				};
+
+				return gapsString.join('');
+			};
+
 	
 
 		$(document).mousemove(function (e) {
@@ -25,22 +38,26 @@ $(document).ready(function () {
 
 	$('.submit').on("click", function() {
 
-		name1_string = $('input:text:first').val().toUpperCase();
+		name1String = $('input:text:first').val().toUpperCase();
 
 		var widths = ["one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve"];
-		
-		var name1_width = widths[name1_string.length - 1];  // sort out number of columns
-		$('#name1').attr('class', name1_width + ' columns');
+		var name1WidthWords = widths[name1String.length - 1];  // sort out number of columns
 
-		var name1_letters = []
-		name1_letters = name1_string.split('');
+		var GapsStringNameOne = makeGaps(name1String.length);
+		$('#name1').attr('class', name1WidthWords + ' columns').append(GapsStringNameOne);
 
-		name2_string = $('input:text:last').val().toUpperCase();
-		var name2_width = widths[name2_string.length - 1];
-		$('#name2').attr('class', name2_width + ' columns');
+		var name1LettersArray = [];
+		name1LettersArray = name1String.split('');
 
-		var name2_letters = []
-		name2_letters = name2_string.split('');
+		name2String = $('input:text:last').val().toUpperCase();
+
+		var GapsStringNameTwo = makeGaps(name2String.length);
+
+		var name2WidthWords = widths[name2String.length - 1];
+		$('#name2').attr('class', name2WidthWords + ' columns').append(GapsStringNameTwo);
+
+		var name2LettersArray = [];
+		name2LettersArray = name2String.split('');
 		
 		$('#inputs').hide();
 		$('.container').css("display", "block");
@@ -52,6 +69,7 @@ $(document).ready(function () {
 			$(document).on("keydown", function (e) {
 				 
 				$('#intro').hide();
+				$('#name1').show();
 
 				var random_colour = ('#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6));
 
@@ -63,16 +81,20 @@ $(document).ready(function () {
 
 				document.getElementById(letter).play(); //  play the audio
 
-				function letters_function (letters) {  // define the function
+				function letters_function (letters) {  // define the main game function
 
 							if ($.inArray(letter, letters) == 0) {
 
-								$(myDiv).append("<span>" + letter + "</span>")
-										 .css("display", "block")
-										 .css("color", random_colour);
+								var gapSpans = $(myDiv).find("#gap");
+								// var position = letters.indexOf(letter);
+								// alert(gapSpans.first().text());
+
+								gapSpans.first().attr("id", "lex")
+												.text(letter)
+												.css("display", "inline")
+										 		.css("color", random_colour);
 
 								letters.splice(0, 1);
-								// console.log(letters);
 
 							} else {
 
@@ -81,32 +103,36 @@ $(document).ready(function () {
 								$('.letters').html(letter)
 										 .css("display", "block")
 										 .css("text-align", "left")
-										 .css("left", "-20%")
+										 .css("left", "-10%")
 										 .css("color", random_colour)
 										 .css("font-size", 20 + (Math.floor(maths * 256)) )
 										 .css("text-shadow", (5 + (Math.floor(maths * 10))) + "px " + (5 + (Math.floor(maths * 10))) + "px " + "darkgray" )
 										 .animate({ 
-										 	paddingLeft: (Math.floor(maths * 800)) + 'px'
+										 	paddingLeft: (Math.floor(maths * screen.width * 1.25)) + 'px',
+										 	// paddingTop: (Math.floor(maths * screen.height * 0.8)) + 'px'
+
 										 }, 1000);
 								};
 							};
 
 		
 				var myDiv = '#name1'; // call the function for name1
-				letters_function(name1_letters);
+				letters_function(name1LettersArray);
 
-				if (name1_letters.length == 0) {  // call the function for name2
+				if (name1LettersArray.length == 0) {  // call the function for name2
+
+					$('#and p').css("display", "block");
+					$('#name2').show();
+					$('#congrats').css("display", "block")
+									.animate({ top: 0}, 1000 );
 
 					var myDiv = '#name2';
-					$('#and p').css("display", "block");
-					$('#name2').attr('class', name2_width + ' columns');
-
-					letters_function(name2_letters);
+					letters_function(name2LettersArray);
 				};
 
 		// call the end function
 
-				if (name1_letters.length == 0 && name2_letters.length == 0) {
+				if (name1LettersArray.length == 0 && name2LettersArray.length == 0) {
 
 					$('.letters').animate({   // make the single letter disappear
 										 	paddingTop: '800px'
@@ -114,25 +140,28 @@ $(document).ready(function () {
 								.hide(1000);
 
 					var allLetters = $('#name1, #name2').find('span');
-					var maths = Math.random();
+					
 
 					for (var i = 0; i < allLetters.length; i++) { // make em dance
 					
+						var maths = Math.random();
+						
 						if ((i+1)%2==0) {
 							allLetters.eq(i).animate({ fontSize: '500px', paddingLeft: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 100000)));
 						} else {
 							allLetters.eq(i).animate({ fontSize: '500px', paddingRight: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 100000)));
 						};
 
-						console.log(allLetters.eq(i).text());
+						// console.log(allLetters.eq(i).text());
 					};
 					
-					$("#and p").animate({ fontSize: '500px', paddingTop: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 100000)));
-					$("#again p").animate({ fontSize: '200px', paddingTop: (Math.floor(maths * 800)) + 'px', opacity: 1}, (Math.floor(maths * 100000)));
+					$("#and p").animate({ fontSize: '500px', paddingTop: (Math.floor(Math.random() * 800)) + 'px'}, (Math.floor(Math.random() * 100000)));
+					$("#congrats img").animate({ width: '500px', paddingTop: (Math.floor(Math.random() * 800)) + 'px'}, (Math.floor(Math.random() * 100000)));
+					$("#again p").animate({ fontSize: '200px', paddingTop: (Math.floor(Math.random() * 800)) + 'px', opacity: 1}, (Math.floor(Math.random() * 100000)));
 
 					document.getElementById("success").play();
 
-					
+
 				}
 
 			});

@@ -8,6 +8,8 @@ html, body {
 	margin-top: 5%;
 }
 
+											/* FIRST PAGE */
+
 div#inputs  {
 	width: 100%;
 	height: 100%;
@@ -16,7 +18,6 @@ div#inputs  {
 	padding-top: 2%;
 }
 
-#intro,
 #inputs input,
 #inputs button,
 #inputs p {
@@ -54,27 +55,76 @@ div#inputs  {
 }
 
 
-#and p {
-	display: none;
-	color: black;
+										/* GAME PAGE */
+#intro {
+	text-transform: capitalize;
+	font-family: Helvetica Neue;
+	width: 80%;
+	margin: 1% 10% 1% 10%;
+	text-align: center;
+	font-size: 60px;
+
+	background-color: none;
+	box-shadow: none;
+	border-style: none;
+	border-bottom: 2px solid black;
+	line-height: 120px;
 }
 
-.letters,
 #name1,
 #and, 
 #name2 {
-
 	width: 100%;
-	height: 20%;
+	height: 12%;
 	display: block;
 	text-align: center;
 	font-size: 120px;
-	/*background-color: none;*/
+}
+
+#name1,
+#name2 {
+	display: none;
+}
+
+#and {
+	margin: 2% 0 4% 0;
+}
+
+#and p {
+	display: none;
+	color: black;
+	padding: inherit;
 }
 
 .letters {
-/*	width: 150%;*/
+	height: 100%;
+	z-index: 3;
+	position: fixed;
+	display: block;
+	text-align: center;
+	font-size: 120px;
+	padding-top: 10%;
 }
+
+span {
+	/*border-bottom: 2px solid white;*/
+/*	letter-spacing: 0.2em;*/
+	margin: 0 2% 0 2%;
+}
+
+#congrats {
+	top: -10%; /*hide it*/
+	left: 70%;
+	float: left;
+	display: none;
+	z-index: 5;
+	position: absolute;
+}
+
+#congrats img {
+		width: 140px;
+}
+
 
 #again p {
 	opacity: 0;
