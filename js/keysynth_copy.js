@@ -24,7 +24,6 @@ $(document).ready(function () {
 				return gapsString.join('');
 			};
 
-	
 
 		$(document).mousemove(function (e) {
 		
@@ -85,14 +84,19 @@ $(document).ready(function () {
 
 							if ($.inArray(letter, letters) == 0) {
 
+								var realFontSize = $(myDiv).css("font-size");
 								var gapSpans = $(myDiv).find("#gap");
 								// var position = letters.indexOf(letter);
 								// alert(gapSpans.first().text());
 
 								gapSpans.first().attr("id", "lex")
 												.text(letter)
+												.css("font-size", (Math.floor(Math.random() * 800))) // create random font-size to animate from
 												.css("display", "inline")
-										 		.css("color", random_colour);
+										 		.css("color", random_colour)
+										 		.animate({
+										 			fontSize: realFontSize
+												 		}, 3000);
 
 								letters.splice(0, 1);
 
@@ -145,19 +149,22 @@ $(document).ready(function () {
 					for (var i = 0; i < allLetters.length; i++) { // make em dance
 					
 						var maths = Math.random();
+						var currentLetter = allLetters.eq(i);
 
 						if ((i+1)%2==0) {
-							allLetters.eq(i).animate({ fontSize: '500px', paddingLeft: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 100000)));
+							
+							currentLetter.animate({ fontSize: '500px', top: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 100000)));
+
 						} else {
-							allLetters.eq(i).animate({ fontSize: '500px', paddingRight: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 100000)));
+							currentLetter.animate({ fontSize: '500px', left: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 100000)));
 						};
 
 						// console.log(allLetters.eq(i).text());
 					};
 					
-					$("#and p").animate({ fontSize: '500px', paddingTop: (Math.floor(Math.random() * 800)) + 'px'}, (Math.floor(Math.random() * 100000)));
-					$("#congrats img").animate({ width: '500px', paddingTop: (Math.floor(Math.random() * 800)) + 'px'}, (Math.floor(Math.random() * 100000)));
-					$("#again p").animate({ fontSize: '200px', paddingTop: (Math.floor(Math.random() * 800)) + 'px', opacity: 1}, (Math.floor(Math.random() * 100000)));
+					$("#and p").animate({ fontSize: '500px', top: (Math.floor(Math.random() * 800)) + 'px'}, (Math.floor(Math.random() * 100000)));
+					// $("#congrats img").animate({ width: '500px', paddingTop: (Math.floor(Math.random() * 800)) + 'px'}, (Math.floor(Math.random() * 100000)));
+					$("#again p").animate({ fontSize: '100px', top: (Math.floor(Math.random() * 800)) + 'px', opacity: 1}, (Math.floor(Math.random() * 100000)));
 
 					document.getElementById("success").play();
 
