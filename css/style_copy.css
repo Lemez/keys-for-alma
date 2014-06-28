@@ -1,0 +1,90 @@
+html, body {
+	width: 100%;
+	height: 100%;
+	font-family: "DINPro", "Museo Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+.container {
+	margin-top: 5%;
+}
+
+div#inputs  {
+	width: 100%;
+	height: 100%;
+	/*background-color: gray;*/
+/*	position: fixed;*/
+	padding-top: 2%;
+}
+
+#intro,
+#inputs input,
+#inputs button,
+#inputs p {
+	text-transform: capitalize;
+	font-family: Helvetica Neue;
+	width: 80%;
+	margin: 1% 10% 1% 10%;
+	text-align: center;
+	font-size: 60px;
+
+	background-color: none;
+	box-shadow: none;
+	border-style: none;
+	border-bottom: 2px solid black;
+	line-height: 120px;
+}
+#inputs p {
+	font-size: 120px;
+	color: white;
+	border-bottom: none;
+}
+
+#inputs button {
+	border: solid 5px black;
+	width: 40%;
+	margin: 1% 30% 1% 30%;
+}
+
+#inputs button:hover {
+	background: yellow;
+}
+
+#inputs input:active {
+	cursor: text;
+}
+
+
+#and p {
+	display: none;
+	color: black;
+}
+
+.letters,
+#name1,
+#and, 
+#name2 {
+
+	width: 100%;
+	height: 20%;
+	display: block;
+	text-align: center;
+	font-size: 120px;
+	/*background-color: none;*/
+}
+
+.letters {
+/*	width: 150%;*/
+}
+
+#again p {
+	opacity: 0;
+	font-size: 50px;
+	float: right;
+	top: 0;
+	margin-right: 2%;
+	color: white;
+	border: solid 3px white;
+	font-weight: 700;
+}
+
+
