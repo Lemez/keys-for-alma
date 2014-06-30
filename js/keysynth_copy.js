@@ -1,6 +1,36 @@
 // whatthekeycode.com
 //  define some global variables
 
+var PICS = {
+	"A" : "airplane.svg",
+	"B" : "bee.svg",
+	"C" : "cat.svg",
+	"D" : "dog.svg",
+	"E" : "elephant.svg",
+	"F" : "frog.svg",
+	"G"	: "gorilla.svg",
+	"H" : "horse.svg",
+	"I" : "iguana.svg",
+	"J" : "jellyfish.svg",
+	"K" : "koala.svg",
+	"L" : "lion.svg",
+	"M" : "monkey.svg",
+	"N" : "nose.svg",
+	"O"	: "owl.svg",
+	"P" : "parrot.svg",
+	"Q" : "quiet.svg",
+	"R" : "rabbit.svg",
+	"S" : "sheep.svg",
+	"T" : "trumpet.svg",
+	"U" : "umbrella.svg",
+	"V" : "violin.svg",
+	"W" : "whale.svg",
+	"X" : "xylophone.svg",
+	"Y" : "yawn.svg",
+	"Z" : "zebra.svg"
+}
+
+
 $(document).ready(function () {
 
 			spectrum();
@@ -14,7 +44,8 @@ $(document).ready(function () {
 			function makeGaps(stringLength) {
 
 				var gapsString = [];
-				var spanString = "<span id='gap'>*</span>";
+	
+				var spanString = "<span id='pix'><img  src='' /></span>";
 
 				for (var i = 0; i < stringLength; i++) {
 
@@ -24,6 +55,9 @@ $(document).ready(function () {
 				return gapsString.join('');
 			};
 
+			
+
+
 			function getPosition(e) {
 				var coordinates = e.offset();
 				// console.log(coordinates);	
@@ -32,7 +66,7 @@ $(document).ready(function () {
 
 			function checkPosition() {
 
-					var allLetters = $('#name1, #name2').find('span');
+					var allLetters = $('#name1').find('img');
 					for (var i = 0; i < allLetters.length; i++) { // check coordinates
 
 						var currentLetter = allLetters.eq(i);
@@ -82,20 +116,36 @@ $(document).ready(function () {
 		var name1WidthWords = widths[name1String.length - 1];  // sort out number of columns
 
 		var GapsStringNameOne = makeGaps(name1String.length);
-		$('#name1').attr('class', name1WidthWords + ' columns').append(GapsStringNameOne);
+		// $('#name1').attr('class', name1WidthWords + ' columns').append(GapsStringNameOne);
+		$('#name1').attr('class','sixteen columns').append(GapsStringNameOne);
+
 
 		var name1LettersArray = [];
 		name1LettersArray = name1String.split('');
 
-		name2String = $('input:text:last').val().toUpperCase();
+		makeGaps(name1LettersArray);
 
-		var GapsStringNameTwo = makeGaps(name2String.length);
+		var imageDivs = $('#name1').find("img");
 
-		var name2WidthWords = widths[name2String.length - 1];
-		$('#name2').attr('class', name2WidthWords + ' columns').append(GapsStringNameTwo);
+		for (var i = 0; i < name1LettersArray.length; i++) {
 
-		var name2LettersArray = [];
-		name2LettersArray = name2String.split('');
+			imageDivs.eq(i).attr('src', "images/" + PICS[name1LettersArray[i]])
+							// .css("width", 90/name1LettersArray.length + '%')
+							;
+
+		};
+			
+
+
+		// name2String = $('input:text:last').val().toUpperCase();
+
+		// var GapsStringNameTwo = makeGaps(name2String.length);
+
+		// var name2WidthWords = widths[name2String.length - 1];
+		// $('#name2').attr('class', name2WidthWords + ' columns').append(GapsStringNameTwo);
+
+		// var name2LettersArray = [];
+		// name2LettersArray = name2String.split('');
 		
 		$('#inputs').hide();
 		$('.container').css("display", "block");
@@ -124,11 +174,12 @@ $(document).ready(function () {
 							if ($.inArray(letter, letters) == 0) {
 
 								var realFontSize = $(myDiv).css("font-size");
-								var gapSpans = $(myDiv).find("#gap");
+								var picDivs = $(myDiv).find("#pix");
 								// var position = letters.indexOf(letter);
 								// alert(gapSpans.first().text());
 
-								gapSpans.first().attr("id", "lex")
+								picDivs.first().attr("id", "lex")
+												// .append("<span></span>")
 												.text(letter)
 												.css("font-size", (Math.floor(Math.random() * 800))) // create random font-size to animate from
 												.css("display", "inline")
@@ -162,27 +213,27 @@ $(document).ready(function () {
 				var myDiv = '#name1'; // call the function for name1
 				letters_function(name1LettersArray);
 
-				if (name1LettersArray.length == 0 && name2LettersArray.length != 0) {  // call the function for name2
+				// if (name1LettersArray.length == 0 && name2LettersArray.length != 0) {  // call the function for name2
 
-					$('#and p').animate({ opacity: 1}, 3000 );
-					$('#name2').slideDown(2000);
-					$('#congrats').css("display", "block")
-									.animate({ top: 0}, 1000 );
+				// 	$('#and p').animate({ opacity: 1}, 3000 );
+				// 	$('#name2').slideDown(2000);
+				// 	$('#congrats').css("display", "block")
+				// 					.animate({ top: 0}, 1000 );
 
-					var myDiv = '#name2';
-					letters_function(name2LettersArray);
-				};
+				// 	var myDiv = '#name2';
+				// 	letters_function(name2LettersArray);
+				// };
 
-		// call the end function
 
-				if (name1LettersArray.length == 0 && name2LettersArray.length == 0) {
+			
+				if (name1LettersArray.length == 0) { 
 
 					$('.letters').animate({   // make the single letter disappear
 										 	paddingTop: '800px'
 										 }, 1000)
 								.hide(1000);
 
-					var allLetters = $('#name1, #name2').find('span');
+					var allLetters = $('#name1').find('span');
 					
 
 					for (var i = 0; i < allLetters.length; i++) { // make em dance
@@ -203,7 +254,7 @@ $(document).ready(function () {
 
 
 					
-					$("#and p").animate({ fontSize: '500px', top: (Math.floor(Math.random() * 800)) + 'px'}, (Math.floor(Math.random() * 100000)));
+					// $("#and p").animate({ fontSize: '500px', top: (Math.floor(Math.random() * 800)) + 'px'}, (Math.floor(Math.random() * 100000)));
 					// $("#congrats img").animate({ width: '500px', paddingTop: (Math.floor(Math.random() * 800)) + 'px'}, (Math.floor(Math.random() * 100000)));
 					$("#again p").animate({ fontSize: '100px', top: (Math.floor(Math.random() * 800)) + 'px', opacity: 1}, (Math.floor(Math.random() * 100000)));
 
