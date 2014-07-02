@@ -33,107 +33,181 @@ var PICS = {
 
 $(document).ready(function () {
 
-			spectrum();
-			function spectrum(){
-			    var hue = 'rgba(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.random() + 0.3) + ')';
-			    $('body, #inputs input').animate( { backgroundColor: hue }, 5000);
-			    setTimeout(spectrum,1); // stop it from overloading max cache
-			    // console.log(hue);
+		spectrum();
+		function spectrum(){
+		    var hue = 'rgba(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.random() + 0.3) + ')';
+		    $('body, #inputs input').animate( { backgroundColor: hue }, 5000);
+		    setTimeout(spectrum,1); // stop it from overloading max cache
+		    // console.log(hue);
+		};
+
+		function makeGaps(stringLength) {
+
+			var gapsString = [];
+			var spanString = "<span id='pix' class='col'><img  src='' /></span>";
+
+			for (var i = 0; i < stringLength; i++) {
+				gapsString.push(spanString);
 			};
 
-			function makeGaps(stringLength) {
+			return gapsString.join('');
+		};
 
-				var gapsString = [];
+		function makeNums(stringLength) {
+
+			var numsString = [];
+			var spanString = "<span id='num' class='col'></span>";
+
+			for (var i = 0; i < stringLength; i++) {
+				numsString.push(spanString);
+			};
+
+			return numsString.join('');
+		};
+
+		function makeCols(stringLength) {
+			var colsString = [];
+			var spanString = "<div class='col'></div>";
+			for (var i = 0; i < stringLength; i++) {
+				colsString.push(spanString);
+			};
+
+			return colsString.join('');
+
+		};
+
 	
-				var spanString = "<span id='pix'><img  src='' /></span>";
 
-				for (var i = 0; i < stringLength; i++) {
 
-					gapsString.push(spanString);
+		function getPosition(e) {
+			var coordinates = e.offset();
+			// console.log(coordinates);	
+			return coordinates;
+		};
+
+		function checkPosition() {
+
+				var allLetters = $('#name1').find('img');
+				for (var i = 0; i < allLetters.length; i++) { // check coordinates
+
+					var currentLetter = allLetters.eq(i);
+
+					var coordinates = getPosition(currentLetter);
+					var details = [currentLetter.text(), screen.width, coordinates.left, screen.height, coordinates.top];
+					console.log(details);
+
+					// if ((coordinates.left+100) > screen.width) {
+					// 	// currentLetter.stop();
+					// 	currentLetter.offset({
+					// 		left: (coordinates.left - screen.width),
+					// 		top: coordinates.top
+					// 	});
+					// 	// alert("right bump!");
+					// };
+
+					// if ((coordinates.top+200) > screen.height) {
+					// 	currentLetter.stop();
+					// 	currentLetter.offset({
+					// 		top: (coordinates.top - screen.height)
+					// 	});
+					// 	// alert("bottom bump!");
+					// };
+
 				};
 
-				return gapsString.join('');
-			};
+				setTimeout(checkPosition, 1000);
+		};
 
-			
-
-
-			function getPosition(e) {
-				var coordinates = e.offset();
-				// console.log(coordinates);	
-				return coordinates;
-			};
-
-			function checkPosition() {
-
-					var allLetters = $('#name1').find('img');
-					for (var i = 0; i < allLetters.length; i++) { // check coordinates
-
-						var currentLetter = allLetters.eq(i);
-
-						var coordinates = getPosition(currentLetter);
-						var details = [currentLetter.text(), screen.width, coordinates.left, screen.height, coordinates.top];
-						console.log(details);
-
-						// if ((coordinates.left+100) > screen.width) {
-						// 	// currentLetter.stop();
-						// 	currentLetter.offset({
-						// 		left: (coordinates.left - screen.width),
-						// 		top: coordinates.top
-						// 	});
-						// 	// alert("right bump!");
-						// };
-
-						// if ((coordinates.top+200) > screen.height) {
-						// 	currentLetter.stop();
-						// 	currentLetter.offset({
-						// 		top: (coordinates.top - screen.height)
-						// 	});
-						// 	// alert("bottom bump!");
-						// };
-
-					};
-
-					setTimeout(checkPosition, 1000);
-				};
-
-
-		$(document).mousemove(function (e) {
-		
-			var mouseX = e.pageX; // e.pageX - gives you the X position.
-			var mouseY = e.pageY; // e.pageY - gives you the Y position.
-			// console.log(mouseX);
-			// console.log(mouseY);
+	$(document).mousemove(function (e) {
+	
+		var mouseX = e.pageX; // e.pageX - gives you the X position.
+		var mouseY = e.pageY; // e.pageY - gives you the Y position.
+		// console.log(mouseX);
+		// console.log(mouseY);
 	});
 
 	$('.container').css("display", "none");
-
 	$('.submit').on("click", function() {
 
-		name1String = $('input:text:first').val().toUpperCase();
+		var name1String = $('input:text:first').val().toUpperCase();
 
-		var widths = ["one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve"];
-		var name1WidthWords = widths[name1String.length - 1];  // sort out number of columns
+		var widths = ["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve"];
+		
+		if ((name1String.length % 2) == 0) {
+			var evenLength = name1String.length;
+		} else {
+			var evenLength = name1String.length + 1;
+		};
+		
+		var offsetSize = (14 - evenLength);
+		// alert(evenLength);
+		// var name1WidthWords = widths[(evenLength/2)];  // sort out number of columns
+		// alert(offsetSize);
 
 		var GapsStringNameOne = makeGaps(name1String.length);
-		// $('#name1').attr('class', name1WidthWords + ' columns').append(GapsStringNameOne);
-		$('#name1').attr('class','sixteen columns').append(GapsStringNameOne);
+		var NumsStringNameOne = makeNums(name1String.length);
 
+		var divOffset = offsetSize/2;
+		var divOffsetWords = widths[divOffset];
+		var NumsCols = makeCols(name1String.length);
+		// $('#name1').attr('class', name1WidthWords + ' columns').append(GapsStringNameOne);
+		$('#content').append(NumsCols);
+		var cols = $('.col');
+		// alert(cols.length);
 
 		var name1LettersArray = [];
-		name1LettersArray = name1String.split('');
+		var name1LettersArray = name1String.split('');
 
-		makeGaps(name1LettersArray);
-
-		var imageDivs = $('#name1').find("img");
+		var imageSources = []
 
 		for (var i = 0; i < name1LettersArray.length; i++) {
 
-			imageDivs.eq(i).attr('src', "images/" + PICS[name1LettersArray[i]])
-							// .css("width", 90/name1LettersArray.length + '%')
-							;
+			var textValue = i+1;
+			imageSources.push(PICS[name1LettersArray[i]]);
 
+			cols.eq(i)
+						.append('<div id="num" class="row circle">' + textValue + '</div>')
+						
+						.append('<div id="pix" class="row"><img src="images/star.svg" ></div>')
+						
+						.append('<div id="lex" class="row"><p></p></div>');
+							// .css("width", 90/name1LettersArray.length + '%')
+			// var colWidth = colSpansPix.eq(i).width;
+					
+						// .find("#num")
+						// .css("width", colWidth);		
 		};
+		
+			$('.col').eq(0).addClass('offset-by-' + divOffsetWords);
+
+
+		// $('#content .col').eq(0)
+		// 				 .addClass('offset-by-' + divOffsetWords)
+		// ;
+		
+		// alert(divOffsetWords);
+		// $('#name2').attr('class','sixteen columns').append(NumsStringNameOne);
+
+		// makeGaps(name1LettersArray);
+		// makeNums(name1LettersArray);
+
+		// var imageDivs = $('#name1').find("img");
+		// var numDivs = $('#name2').find("span");
+		// var colSpansPix = $('#pix');
+		// var colSpansNum = $('#num');
+
+		// for (var i = 0; i < name1LettersArray.length; i++) {
+
+		// 	// numDivs.eq(i).html(i);
+		// 	colSpansPix.eq(i)
+		// 				.append('<img src= "images/' + PICS[name1LettersArray[i]] + '" />');
+		// 					// .css("width", 90/name1LettersArray.length + '%')
+		// 	// var colWidth = colSpansPix.eq(i).width;
+		// 	colSpansNum.eq(i)
+		// 				.text((i+1));
+		// 				// .find("#num")
+		// 				// .css("width", colWidth);				
+		// };
 			
 
 
@@ -148,7 +222,17 @@ $(document).ready(function () {
 		// name2LettersArray = name2String.split('');
 		
 		$('#inputs').hide();
-		$('.container').css("display", "block");
+		$('.container').css("display", "inline");
+
+		// function bounceIt(){
+
+		// 	$(this).animate({
+		// 		paddingTop: "-20px"},
+		// 		{ duration: 1000, easing: 'easeOutBounce'
+		// 	});
+
+		// 	setTimeout(bounce, 1);
+		// };
 
 		startgame();
 
@@ -157,7 +241,8 @@ $(document).ready(function () {
 			$(document).on("keydown", function (e) {
 				 
 				$('#intro').hide();
-				$('#name1').show();
+				$('.col').css("opacity", 1);
+
 
 				var random_colour = ('#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6));
 
@@ -167,51 +252,82 @@ $(document).ready(function () {
 
 				var letter = keyCodeToChar[e.which || e.keyCode];
 
+				var letterDivs = $('#lex p');
+				var imageDivs = $('#pix img');
+				imageDivs.eq(0).attr("src", "images/" + imageSources[0]);	
+				
+
 				document.getElementById(letter).play(); //  play the audio
+
+				letters_function(name1LettersArray);
 
 				function letters_function (letters) {  // define the main game function
 
 							if ($.inArray(letter, letters) == 0) {
 
-								var realFontSize = $(myDiv).css("font-size");
-								var picDivs = $(myDiv).find("#pix");
-								// var position = letters.indexOf(letter);
+								var realFontSize = $('#lex').css("font-size");
+								
+								var counter = (name1String.length - letters.length);
 								// alert(gapSpans.first().text());
 
-								picDivs.first().attr("id", "lex")
-												// .append("<span></span>")
+								letterDivs.eq(counter)
 												.text(letter)
 												.css("font-size", (Math.floor(Math.random() * 800))) // create random font-size to animate from
-												.css("display", "inline")
+												.css("display", "inline-block")
 										 		.css("color", random_colour)
 										 		.animate({
 										 			fontSize: realFontSize
 												 		}, 3000);
 
+								
+								var myImage = "images/" + imageSources[counter+1];
+
+								// imageDivs.eq(counter+1).delay(3000).animate({
+								// 					opacity : 0
+								// 						}, 1000);
+
+								// imageDivs.eq(counter).bounceIt();
+
+								imageDivs.eq(counter+1).attr("src", myImage)
+														// .animate({
+										 			// opacity: 1
+												 	// 	}, { 
+												 	// duration: 1000, 
+												 	// easing: 'easeOutBounce'})
+														;
+
+								imageDivs.eq(counter+1).delay(3000).animate({
+													opacity : 0
+														}, 1000)
+											.animate({
+													opacity : 1
+														}, 1000);
+
 								letters.splice(0, 1);
+								
+
 
 							} else {
 
 								var maths = Math.random();
 
-								$('.letters').html(letter)
-										 .css("display", "block")
+								$('.letters')
+									.html("<span id='pix'><img  src='images/" + PICS[letter] + 
+														"' /></span>")
+										 .css("display", "inline-block")
 										 .css("text-align", "left")
-										 .css("left", "-10%")
+										 .css("left", "-2%")
 										 .css("color", random_colour)
 										 .css("font-size", 20 + (Math.floor(maths * 256)) )
 										 .css("text-shadow", (5 + (Math.floor(maths * 10))) + "px " + (5 + (Math.floor(maths * 10))) + "px " + "darkgray" )
-										 .animate({ 
-										 	paddingLeft: (Math.floor(maths * screen.width * 1.25)) + 'px'
-										 	// paddingTop: (Math.floor(maths * screen.height * 0.8)) + 'px'
-
-										 }, 1000);
-								};
+										 .animate(
+										 { paddingLeft: (Math.floor(maths * screen.width * 1.25)) + 'px' },
+										 { duration: 1000, easing: 'easeOutBounce'}
+										 	);
 							};
+				};
 
-		
-				var myDiv = '#name1'; // call the function for name1
-				letters_function(name1LettersArray);
+	
 
 				// if (name1LettersArray.length == 0 && name2LettersArray.length != 0) {  // call the function for name2
 
@@ -224,7 +340,6 @@ $(document).ready(function () {
 				// 	letters_function(name2LettersArray);
 				// };
 
-
 			
 				if (name1LettersArray.length == 0) { 
 
@@ -233,7 +348,7 @@ $(document).ready(function () {
 										 }, 1000)
 								.hide(1000);
 
-					var allLetters = $('#name1').find('span');
+					var allLetters = $('#lex').find('span');
 					
 
 					for (var i = 0; i < allLetters.length; i++) { // make em dance
