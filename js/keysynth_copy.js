@@ -2,7 +2,7 @@
 //  define some global variables
 
 var PICS = {
-	"A" : "airplane.svg",
+	"A" : "apple 2.svg",
 	"B" : "bee.svg",
 	"C" : "cat.svg",
 	"D" : "dog.svg",
@@ -13,7 +13,7 @@ var PICS = {
 	"I" : "iguana.svg",
 	"J" : "jellyfish.svg",
 	"K" : "koala.svg",
-	"L" : "lion.svg",
+	"L" : "lion 2.svg",
 	"M" : "monkey.svg",
 	"N" : "nose.svg",
 	"O"	: "owl.svg",
@@ -168,7 +168,7 @@ $(document).ready(function () {
 			cols.eq(i)
 						.append('<div id="num" class="row circle">' + textValue + '</div>')
 						
-						.append('<div id="pix" class="row"><img src="images/star.svg" ></div>')
+						.append('<div id="pix" class="row circle-center"><img src="images/question.svg" ></div>')
 						
 						.append('<div id="lex" class="row"><p></p></div>');
 							// .css("width", 90/name1LettersArray.length + '%')
@@ -178,7 +178,9 @@ $(document).ready(function () {
 						// .css("width", colWidth);		
 		};
 		
-			$('.col').eq(0).addClass('offset-by-' + divOffsetWords);
+			$('.col').eq(0).addClass('offset-by-' + divOffsetWords)
+							.find("#pix")
+							.css("opacity", "1");
 
 
 		// $('#content .col').eq(0)
@@ -241,7 +243,9 @@ $(document).ready(function () {
 			$(document).on("keydown", function (e) {
 				 
 				$('#intro').hide();
+				$('.letters').hide();
 				$('.col').css("opacity", 1);
+
 
 
 				var random_colour = ('#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6));
@@ -256,52 +260,62 @@ $(document).ready(function () {
 				var imageDivs = $('#pix img');
 				imageDivs.eq(0).attr("src", "images/" + imageSources[0]);	
 				
-
 				document.getElementById(letter).play(); //  play the audio
 
-				letters_function(name1LettersArray);
+				letters_function(name1LettersArray); //  play the game
 
 				function letters_function (letters) {  // define the main game function
 
 							if ($.inArray(letter, letters) == 0) {
 
 								var realFontSize = $('#lex').css("font-size");
-								
+
 								var counter = (name1String.length - letters.length);
-								// alert(gapSpans.first().text());
+
 
 								letterDivs.eq(counter)
 												.text(letter)
 												.css("font-size", (Math.floor(Math.random() * 800))) // create random font-size to animate from
 												.css("display", "inline-block")
 										 		.css("color", random_colour)
+										 		// .css("text-shadow", (5 + (Math.floor(maths * 10))) + "px " + (5 + (Math.floor(maths * 10))) + "px " + "darkgray")
 										 		.animate({
 										 			fontSize: realFontSize
-												 		}, 3000);
+												 		}, 3000)
+										 		;
+
+								setTimeout(function() {
+												 			
+									var myImage = "images/" + imageSources[counter+1];
+
+									// imageDivs.eq(counter+1).delay(3000).animate({
+									// 					opacity : 0
+									// 						}, 1000);
+
+									// imageDivs.eq(counter).bounceIt();
+									$(".col").eq(counter).find(".circle-center").css("background-color", random_colour);
+
+									$(".col").eq(counter+1)
+											.find("#pix")
+											.animate({
+													opacity : 1},
+																 	1000);
+
+									imageDivs.eq(counter+1).attr("src", myImage)
+														// .animate({
+												 	// 		opacity: 1}, 		 
+														// 	 		5000)
+														.animate({
+															opacity : 0},
+																	1000)
+														.animate({
+															opacity : 1},
+																 	1000);
+
+														}, (3000));
+
 
 								
-								var myImage = "images/" + imageSources[counter+1];
-
-								// imageDivs.eq(counter+1).delay(3000).animate({
-								// 					opacity : 0
-								// 						}, 1000);
-
-								// imageDivs.eq(counter).bounceIt();
-
-								imageDivs.eq(counter+1).attr("src", myImage)
-														// .animate({
-										 			// opacity: 1
-												 	// 	}, { 
-												 	// duration: 1000, 
-												 	// easing: 'easeOutBounce'})
-														;
-
-								imageDivs.eq(counter+1).delay(3000).animate({
-													opacity : 0
-														}, 1000)
-											.animate({
-													opacity : 1
-														}, 1000);
 
 								letters.splice(0, 1);
 								
@@ -315,13 +329,15 @@ $(document).ready(function () {
 									.html("<span id='pix'><img  src='images/" + PICS[letter] + 
 														"' /></span>")
 										 .css("display", "inline-block")
-										 .css("text-align", "left")
+										 .css("text-align", "center")
 										 .css("left", "-2%")
-										 .css("color", random_colour)
+										 .css("opacity", "1")
+										 .css("background-color", random_colour)
+										 .css("border", "solid black 3px")
+										 
 										 .css("font-size", 20 + (Math.floor(maths * 256)) )
-										 .css("text-shadow", (5 + (Math.floor(maths * 10))) + "px " + (5 + (Math.floor(maths * 10))) + "px " + "darkgray" )
 										 .animate(
-										 { paddingLeft: (Math.floor(maths * screen.width * 1.25)) + 'px' },
+										 { marginLeft: (Math.floor(maths * screen.width)) + 'px' },
 										 { duration: 1000, easing: 'easeOutBounce'}
 										 	);
 							};

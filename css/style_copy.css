@@ -83,7 +83,7 @@ div#inputs  {
 
 .col {
 	display: inline-block;
-	width: 190px;
+	width: 100px;
 	padding-left: 1%;
 	padding-right: 1%;
 	text-align: center;
@@ -100,6 +100,17 @@ div#inputs  {
 	float: left;
 	align: center;
 	font-size: 100px;
+}
+
+#lex {
+	font-weight: 700;
+}
+
+#pix img {
+	min-height: 80%;
+	min-width: 80%;
+	opacity: 1;
+
 }
 
 
@@ -129,10 +140,24 @@ font-weight: 700;
 }
 	
 
+.circle-center
+{
 
+background-color: white;
+min-height: 120px;
+min-width: 120px;
+border-radius: 60px;
+
+text-align: center;
+padding: 1% 1% 1% 1%;
+
+opacity: 0.25;
+
+/*border: dotted 3px black;*/
+}
+	
 
 .letters {
-	top: 60%;
 	position: fixed;
 	display: block;
 	text-align: center;
