@@ -364,21 +364,25 @@ $(document).ready(function () {
 										 }, 1000)
 								.hide(1000);
 
-					var allLetters = $('#lex').find('span');
+					var allPics = $('.col').find("img");
+					var allLetters = $('.col #lex').find("p");
 					
 
-					for (var i = 0; i < allLetters.length; i++) { // make em dance
+					for (var i = 0; i < allPics.length; i++) { // make em dance
 					
 						var maths = Math.random();
+						var currentPic = allPics.eq(i);
 						var currentLetter = allLetters.eq(i);
 
 						if ((i+1)%2==0) {
 							
-							currentLetter.animate({ fontSize: '500px', top: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 60000)));
+							currentPic.animate({   width: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 60000)));
+							currentLetter.animate({  fontSize : "500px", top: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 60000)));
 							
 
 						} else {
-							currentLetter.animate({ fontSize: '500px', left: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 60000)));
+							currentPic.animate({  height: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 60000)));
+							currentLetter.animate({  fontSize : "500px", top: (Math.floor(maths * 800)) + 'px'}, (Math.floor(maths * 60000)));
 						};
 						
 					};
