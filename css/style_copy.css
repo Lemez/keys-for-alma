@@ -57,11 +57,19 @@ div#inputs  {
 	cursor: text;
 }
 
+.secret {
+	background-image: url('../images/secret.png');
+	background-size: contain;
+	width: 100px;
+ 
+	opacity: 0.5;
+
+}
 
 										/* INTRODUCTION */
 #intro {
 	text-transform: capitalize;
-	font-family: Helvetica Neue;
+	font-family: "DINPro", "Museo Sans", Helvetica Neue;
 	width: 80%;
 	margin: 1% 10% 1% 10%;
 	text-align: center;
@@ -72,20 +80,26 @@ div#inputs  {
 	border-style: none;
 	border-bottom: 2px solid black;
 	line-height: 120px;
+
 }
 
 #top
  {
 	padding-top: 10%;
+	width: 100%;
 }
 
 /*+++ CORE GAME ++++*/
 
+h2, #num {
+	font-family: "DINPro";
+}
+
 .col {
 	display: inline-block;
-	width: 100px;
-	padding-left: 1%;
-	padding-right: 1%;
+	width: 120px;
+	margin-left: 0.5%;
+	margin-right: 0.5%;
 	text-align: center;
 	opacity: 0;
 
@@ -118,7 +132,10 @@ div#inputs  {
 	text-align: center;
 	width: 100px;
  	height: 70px;
- 	color: rgba(255,255,255,0.5);
+ 	opacity: 0.5;
+ 	font-size: 40px;
+ 	margin-left: 5%;
+
 }
 
 
