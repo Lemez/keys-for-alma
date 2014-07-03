@@ -1,40 +1,17 @@
 // whatthekeycode.com
 //  define some global variables
 
-var PICS = {
-	"A" : "apple2.svg",
-	"B" : "bee2.svg",
-	"C" : "cat.svg",
-	"D" : "dog.svg",
-	"E" : "elephant.svg",
-	"F" : "frog.svg",
-	"G"	: "gorilla.svg",
-	"H" : "horse.svg",
-	"I" : "insect.svg",
-	"J" : "jellyfish.svg",
-	"K" : "kangaroo.svg",
-	"L" : "lion 2.svg",
-	"M" : "monkey.svg",
-	"N" : "nose.svg",
-	"O"	: "owl.svg",
-	"P" : "parrot.svg",
-	"Q" : "quiet.svg",
-	"R" : "rabbit.svg",
-	"S" : "sheep.svg",
-	"T" : "trumpet.svg",
-	"U" : "umbrella.svg",
-	"V" : "violin.svg",
-	"W" : "whale.svg",
-	"X" : "xylophone.svg",
-	"Y" : "yawn.svg",
-	"Z" : "zzz.svg"
-}
+$(document).ready(function () {
 
-var picArray = $.map(PICS, function(value, index) {
-    return [value];
-});
+	$(document).mousemove(function (e) {
+	
+		var mouseX = e.pageX; // e.pageX - gives you the X position.
+		var mouseY = e.pageY; // e.pageY - gives you the Y position.
+		// console.log(mouseX);
+		// console.log(mouseY);
+	});
 
-var SOUNDS = {
+	var SOUNDS = {
 	
 			"A" : "audio/Eating apple soundsnap.wav" ,
 			"B" : "audio/human bee.wav" ,
@@ -65,124 +42,184 @@ var SOUNDS = {
 			"0" : "audio/1.wav" ,
 			"1" : "audio/1.wav" ,
 			"2" : "audio/2.wav" ,
-			"3" : "audio/Linn1-glitch--100.wav" ,
+			"3" : "audio/3.wav" ,
 			"4" : "audio/4.wav" ,
 			"5" : "audio/5.wav" ,
 			"6" : "audio/6.wav" ,
 			"7" : "audio/7.wav" ,
 			"8" : "audio/8.wav" ,
 			"9" : "audio/9.wav" ,
-			"success" : "audio/Peppa.mp3"
-}
+			"success" : "audio/Peppa.mp3",
+			"failure" : "audio/3.wav"
+	}
+	var PICS = {
+		"A" : "apple2.svg",
+		"B" : "bee2.svg",
+		"C" : "cat.svg",
+		"D" : "dog.svg",
+		"E" : "elephant.svg",
+		"F" : "frog.svg",
+		"G"	: "gorilla.svg",
+		"H" : "horse.svg",
+		"I" : "insect.svg",
+		"J" : "jellyfish.svg",
+		"K" : "kangaroo.svg",
+		"L" : "lion 2.svg",
+		"M" : "monkey.svg",
+		"N" : "nose.svg",
+		"O"	: "owl.svg",
+		"P" : "parrot.svg",
+		"Q" : "quiet.svg",
+		"R" : "rabbit.svg",
+		"S" : "sheep.svg",
+		"T" : "trumpet.svg",
+		"U" : "umbrella.svg",
+		"V" : "violin.svg",
+		"W" : "whale.svg",
+		"X" : "xylophone.svg",
+		"Y" : "yawn.svg",
+		"Z" : "zzz.svg"
+	}
 
-
-
-Object.size = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
-
-
-
-$(document).ready(function () {
-
-		spectrum();
-		function spectrum(){
-		    var hue = 'rgba(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.random() + 0.3) + ')';
-		    $('body, #inputs input').animate( { backgroundColor: hue }, 5000);
-		    setTimeout(spectrum,1); // stop it from overloading max cache
-		    // console.log(hue);
-		};
-
-		function makeGaps(stringLength) {
-
-			var gapsString = [];
-			var spanString = "<span id='pix' class='col'><img  src='' /></span>";
-
-			for (var i = 0; i < stringLength; i++) {
-				gapsString.push(spanString);
-			};
-
-			return gapsString.join('');
-		};
-
-		function makeNums(stringLength) {
-
-			var numsString = [];
-			var spanString = "<span id='num' class='col'></span>";
-
-			for (var i = 0; i < stringLength; i++) {
-				numsString.push(spanString);
-			};
-
-			return numsString.join('');
-		};
-
-		function makeCols(stringLength) {
-			var colsString = [];
-			var spanString = "<div class='col'></div>";
-			for (var i = 0; i < stringLength; i++) {
-				colsString.push(spanString);
-			};
-
-			return colsString.join('');
-
-		};
-
-	
-
-
-		function getPosition(e) {
-			var coordinates = e.offset();
-			// console.log(coordinates);	
-			return coordinates;
-		};
-
-		function checkPosition() {
-
-				var allLetters = $('#name1').find('img');
-				for (var i = 0; i < allLetters.length; i++) { // check coordinates
-
-					var currentLetter = allLetters.eq(i);
-
-					var coordinates = getPosition(currentLetter);
-					var details = [currentLetter.text(), screen.width, coordinates.left, screen.height, coordinates.top];
-					console.log(details);
-
-					// if ((coordinates.left+100) > screen.width) {
-					// 	// currentLetter.stop();
-					// 	currentLetter.offset({
-					// 		left: (coordinates.left - screen.width),
-					// 		top: coordinates.top
-					// 	});
-					// 	// alert("right bump!");
-					// };
-
-					// if ((coordinates.top+200) > screen.height) {
-					// 	currentLetter.stop();
-					// 	currentLetter.offset({
-					// 		top: (coordinates.top - screen.height)
-					// 	});
-					// 	// alert("bottom bump!");
-					// };
-
-				};
-
-				setTimeout(checkPosition, 1000);
-		};
-
-	$(document).mousemove(function (e) {
-	
-		var mouseX = e.pageX; // e.pageX - gives you the X position.
-		var mouseY = e.pageY; // e.pageY - gives you the Y position.
-		// console.log(mouseX);
-		// console.log(mouseY);
+	var picArray = $.map(PICS, function(value, index) {
+	    return [value];
 	});
 
+	var availablePics = [];
+
+	// image condition
+	// Get the size of an object by using  defined function
+
+	Object.size = function(obj) {
+	    var size = 0, key;
+	    for (key in obj) {
+	        if (obj.hasOwnProperty(key)) size++;
+	    }
+	    return size;
+	};
+
+	var size = Object.size(PICS);
+
+	for (var i = 0; i < size; i++) {
+
+		var thing = picArray[i];
+		availablePics.push(thing);
+	}
+
+
+	spectrum();
+	function spectrum(){
+	    var hue = 'rgba(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.random() + 0.3) + ')';
+	    $('body, #inputs input').animate( { backgroundColor: hue }, 5000);
+	    setTimeout(spectrum,1); // stop it from overloading max cache
+	    // console.log(hue);
+	};
+
+	function makeGaps(stringLength) {
+
+		var gapsString = [];
+		var spanString = "<span id='pix' class='col'><img  src='' /></span>";
+
+		for (var i = 0; i < stringLength; i++) {
+			gapsString.push(spanString);
+		};
+
+		return gapsString.join('');
+	};
+
+	function makeNums(stringLength) {
+
+		var numsString = [];
+		var spanString = "<span id='num' class='col'></span>";
+
+		for (var i = 0; i < stringLength; i++) {
+			numsString.push(spanString);
+		};
+
+		return numsString.join('');
+	};
+
+	function makeCols(stringLength) {
+		var colsString = [];
+		var spanString = "<div class='col'></div>";
+		for (var i = 0; i < stringLength; i++) {
+			colsString.push(spanString);
+		};
+
+		return colsString.join('');
+
+	};
+
+
+	function countdown(element, seconds) {
+
+	    var interval = setInterval(function() {
+	        var el = document.getElementById(element);
+	        if(seconds == 0) {
+	            // el.innerHTML = "countdown's over!";    
+	            clearInterval(interval);
+	            $('#intro').hide();
+				$('.letters').hide();
+				$('.col').css("opacity", 1);
+	            return;
+	        }
+	        
+	        if (seconds < 10) seconds = "0" + seconds; 
+
+	        el.innerHTML = seconds;
+	        seconds--;
+	    }, 1000);
+	}
+		
+	function getPosition(e) {
+		var coordinates = e.offset();
+		// console.log(coordinates);	
+		return coordinates;
+	};
+
+	function checkPosition() {
+
+			var allLetters = $('#name1').find('img');
+			for (var i = 0; i < allLetters.length; i++) { // check coordinates
+
+				var currentLetter = allLetters.eq(i);
+
+				var coordinates = getPosition(currentLetter);
+				var details = [currentLetter.text(), screen.width, coordinates.left, screen.height, coordinates.top];
+				console.log(details);
+
+				// if ((coordinates.left+100) > screen.width) {
+				// 	// currentLetter.stop();
+				// 	currentLetter.offset({
+				// 		left: (coordinates.left - screen.width),
+				// 		top: coordinates.top
+				// 	});
+				// 	// alert("right bump!");
+				// };
+
+				// if ((coordinates.top+200) > screen.height) {
+				// 	currentLetter.stop();
+				// 	currentLetter.offset({
+				// 		top: (coordinates.top - screen.height)
+				// 	});
+				// 	// alert("bottom bump!");
+				// };
+
+			};
+
+			setTimeout(checkPosition, 1000);
+	};
+
 	$('.container').css("display", "none");
+
+	$('#inputs').keypress(function(e) { // MAKE enter work as submit button
+        if(e.which == 13) {
+            jQuery(this).blur();
+            jQuery('.submit').focus().click();
+        }
+    });
+
+
 	$('.submit').on("click", function() {
 
 		var name1String = $('input:text:first').val().toUpperCase();
@@ -236,12 +273,11 @@ $(document).ready(function () {
 			cols.eq(i).find("#num").css("color", random_colour);
 			randomColours.push(random_colour);
 						// .css("width", colWidth);	
-
 		};
 		
-			$('.col').eq(0).addClass('offset-by-' + divOffsetWords)
-							.find("#pix")
-							.css("opacity", "1");
+		$('.col').eq(0).addClass('offset-by-' + divOffsetWords)
+						.find("#pix")
+						.css("opacity", "1");
 
 
 		// $('#content .col').eq(0)
@@ -272,8 +308,6 @@ $(document).ready(function () {
 		// 				// .css("width", colWidth);				
 		// };
 			
-
-
 		// name2String = $('input:text:last').val().toUpperCase();
 
 		// var GapsStringNameTwo = makeGaps(name2String.length);
@@ -286,6 +320,12 @@ $(document).ready(function () {
 		
 		$('#inputs').hide();
 		$('.container').css("display", "inline");
+		
+		var imageDivs = $('#pix img');
+		imageDivs.eq(0).attr("src", "images/" + imageSources[0]);
+
+		countdown('countdown', 5);
+		startgame();
 
 		// function bounceIt(){
 
@@ -298,7 +338,7 @@ $(document).ready(function () {
 		// };
 
 		
-		startgame();
+		
 
 		function startgame(){
 
@@ -316,113 +356,96 @@ $(document).ready(function () {
 
 				var letter = keyCodeToChar[e.which || e.keyCode];
 				var letterSound = SOUNDS[letter];
-
 				var letterDivs = $('#lex p');
-				var imageDivs = $('#pix img');
-				imageDivs.eq(0).attr("src", "images/" + imageSources[0]);
 
-				$('.sounds').html('<audio id=' + letter + ' src="' + SOUNDS[letter] + '" preload="auto"></audio>');
 				
-				document.getElementById(letter).play(); //  play the audio
+				if (typeof letter === "undefined") {
+								    
+				    $('.sounds').html('<audio id="failure" src="' + SOUNDS["other"] + '" preload="auto"></audio>');
+					document.getElementById("failure").play();
 
+				} else {
+
+					$('.sounds').html('<audio id=' + letter + ' src="' + SOUNDS[letter] + '" preload="auto"></audio>');
+					document.getElementById(letter).play(); //  play the audio
+
+				}
+
+				
+			
 				letters_function(name1LettersArray); //  play the game
 
 				function letters_function (letters) {  // define the main game function
 
-							if ($.inArray(letter, letters) == 0) {
+					if ($.inArray(letter, letters) == 0) {
 
-								var realFontSize = $('#lex').css("font-size");
+						var realFontSize = $('#lex').css("font-size");
 
-								var counter = (name1String.length - letters.length);
+						var counter = (name1String.length - letters.length);
 
-								letterDivs.eq(counter)
-												.text(letter)
-												.css("font-size", (Math.floor(Math.random() * 800))) // create random font-size to animate from
-												.css("display", "inline-block")
-										 		.css("color", randomColours[counter])
-										 		// .css("text-shadow", (5 + (Math.floor(maths * 10))) + "px " + (5 + (Math.floor(maths * 10))) + "px " + "darkgray")
-										 		.animate({
-										 			fontSize: realFontSize
-												 		}, 3000)
-										 		;
+						letterDivs.eq(counter)
+										.text(letter)
+										.css("font-size", (Math.floor(Math.random() * 800))) // create random font-size to animate from
+										.css("display", "inline-block")
+								 		.css("color", randomColours[counter])
+								 		// .css("text-shadow", (5 + (Math.floor(maths * 10))) + "px " + (5 + (Math.floor(maths * 10))) + "px " + "darkgray")
+								 		.animate({
+								 			fontSize: realFontSize
+										 		}, 3000)
+						;
 
-								setTimeout(function() {
-												 			
-									var myImage = "images/" + imageSources[counter+1];
+						setTimeout(function() {
+										 			
+							var myImage = "images/" + imageSources[counter+1];
 
-									// imageDivs.eq(counter+1).delay(3000).animate({
-									// 					opacity : 0
-									// 						}, 1000);
+							$(".col").eq(counter).find(".circle-center").css("background-color", randomColours[counter]);
 
-									// imageDivs.eq(counter).bounceIt();
-									$(".col").eq(counter).find(".circle-center").css("background-color", randomColours[counter]);
+							$(".col").eq(counter+1)
+										.find("#pix")
+										.animate({
+											opacity : 1},
+											1000)
+									;
 
-									$(".col").eq(counter+1)
-											.find("#pix")
-											.animate({
+							imageDivs.eq(counter+1)
+										.attr("src", myImage)
+												.animate({
+													opacity : 0},
+															1000)
+												.animate({
 													opacity : 1},
-																 	1000);
+														 	1000);
+								}, (3000));
 
-									imageDivs.eq(counter+1).attr("src", myImage)
-														// .animate({
-												 	// 		opacity: 1}, 		 
-														// 	 		5000)
-														.animate({
-															opacity : 0},
-																	1000)
-														.animate({
-															opacity : 1},
-																 	1000);
+						letters.splice(0, 1);
 
-														}, (3000));
+					} else {
 
-								letters.splice(0, 1);
+						var maths = Math.random();
+	
+						var correctImg = (($.inArray(PICS[letter], availablePics))+1) ? PICS[letter] : "question.svg";
+						
+						if (typeof correctImg === "undefined") {
+						    correctImg = "question.svg";
+						}
 
-							} else {
-
-								var maths = Math.random();
-								var availablePics = [];
-
-								// image condition
-
-								// Get the size of an object by using above defined function at top
-								var size = Object.size(PICS);
-					
-
-								for (var i = 0; i < size; i++) {
-
-									var thing = picArray[i];
-
-									availablePics.push(thing);
-
-								}
-
-								console.log($.inArray(PICS[letter], availablePics));
-
-								
-
-								var correctImg = (($.inArray(PICS[letter], availablePics))+1) ? PICS[letter] : "question.svg";
-								
-								if (typeof correctImg === "undefined") {
-								    correctImg = "question.svg";
-								}
-
-								$('.letters')
-									.html("<span id='pix'><img  src='images/" + correctImg + 
-														"' /></span>")
-										 .css("display", "inline-block")
-										 .css("text-align", "center")
-										 .css("left", "-2%")
-										 .css("opacity", "1")
-										 .css("background-color", random_colour)
-										 .css("border", "solid black 3px")
-										 
-										 .css("font-size", 20 + (Math.floor(maths * 256)) )
-										 .animate(
-										 { marginLeft: (Math.floor(maths * screen.width)) + 'px' },
-										 { duration: 1000, easing: 'easeOutBounce'}
-										 	);
-							};
+						$('.letters')
+							.html("<span id='pix'><img  src='images/" + correctImg + 
+												"' /></span>")
+								 .css("display", "inline-block")
+								 .css("text-align", "center")
+								 .css("left", "-2%")
+								 .css("opacity", "1")
+								 .css("background-color", random_colour)
+								 .css("border", "solid black 3px")
+								 
+								 .css("font-size", 20 + (Math.floor(maths * 256)) )
+								 .animate(
+								 { marginLeft: (Math.floor(maths * screen.width)) + 'px' },
+								 { duration: 1000, easing: 'easeOutBounce'}
+								 	);
+			
+					};
 				};
 
 	
@@ -478,7 +501,7 @@ $(document).ready(function () {
 					$("#again p").animate({ fontSize: '100px', top: (Math.floor(Math.random() * 800)) + 'px', opacity: 1}, (Math.floor(Math.random() * 100000)));
 
 					setTimeout(function() {
-						$('.sounds').html('<audio id="success" src="audio/Peppa.mp3" preload="auto"></audio>');
+						$('.sounds').html('<audio id="success" src="' + SOUNDS["success"] + '" preload="auto"></audio>');
 						document.getElementById("success").play();
 														}, (3000));
 					
